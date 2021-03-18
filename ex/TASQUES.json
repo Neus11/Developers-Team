@@ -16,4 +16,13 @@
   "start time": "",
   "end time": "",
   "user": "user1"
+},{
+  "_id": {
+    "$oid": "60533ea4b947c76c931afded"
+  },
+  "task": "Team Meeeting",
+  "status": "finished",
+  "start time": "2021-03-18T00:50:42.389Z",
+  "end time": "2021-03-18T10:50:42.389Z",
+  "user": "user1"
 }]

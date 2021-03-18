@@ -6,4 +6,7 @@ Primer cambio en mi rama
 jenriugrg
 yaaaaaaaaaaaa
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

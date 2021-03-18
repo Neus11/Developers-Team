@@ -1,5 +1,7 @@
+<<<<<<< Updated upstream
+Hello world!!   Jordi typing here
+=======
 Hello world!!
 Primer cambio en mi rama
 jenriugrg
 yaaaaaaaaaaaa
-

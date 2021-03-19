@@ -6,6 +6,8 @@ var rl = readline.createInterface({
     output: process.stdout
 });
 
+const fs = require ('fs');
+
 var recursiveAsyncReadLine = function () {
     rl.question("Please Choose an option:\n"
         + "1) Add new task\n"
@@ -27,7 +29,17 @@ var recursiveAsyncReadLine = function () {
                    break;
                case "4":
                    console.log("this is option 4");
+                   fs.readFile('./TASQUES.json', 'utf8', (err,data) => {
+                    if (err) {
+                        console.log(err)
+                        return
+                    } else {
+                        console.log(data); 
+                        recursiveAsyncReadLine()                       
+                    }
+                   })
                    break;
+                   
                 case "5":
                     return rl.close();
                     break;

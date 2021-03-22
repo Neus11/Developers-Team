@@ -22,6 +22,15 @@ function getTasklist() {
       outputList(taskList); 
 }
 
+
+var newObject = {
+    task: "",  
+    status:"",
+    starttime:"",
+    endtime:"",
+    user:"",
+}
+
 const recursiveAsyncReadLine = function () {
     rl.question("Please Choose an option:\n"
         + "1) Add new task\n"
@@ -34,8 +43,68 @@ const recursiveAsyncReadLine = function () {
 
             switch (line){
                 case "1":
-                   console.log("this is option 1");
-                   break;
+                    case "1":
+                    console.log("this is option 1");
+
+                        const question1 = () => {
+                            return new Promise((resolve, reject) => {
+                              rl.question('Add new task name please ', (answer) => {
+                                console.log(`New task ${answer} has been added`)
+                                newObject.task = answer 
+                                resolve()
+                              })
+                            })
+                          }      
+                          const question2 = () => {
+                            return new Promise((resolve, reject) => {
+                              rl.question('Add new task status please ', (answer) => {
+                                console.log(`New status ${answer} has been added`)
+                                newObject.status = answer 
+                                resolve()
+                              })
+                            })
+                          }
+                          const question3 = () => {
+                            return new Promise((resolve, reject) => {
+                              rl.question('Add new start time please ', (answer) => {
+                                console.log(`New start time ${answer} has been added`)
+                                newObject.starttime = answer
+                                resolve()
+                              })
+                            })
+                          }
+                          const question4 = () => {
+                            return new Promise((resolve, reject) => {
+                              rl.question('Add new end time please ', (answer) => {
+                                console.log(`New end time ${answer} has been added`)
+                                newObject.endtime = answer
+                                resolve()
+                              })
+                            })
+                          }
+                          const question5 = () => {
+                            return new Promise((resolve, reject) => {
+                              rl.question('Add new user please ', (answer) => {
+                                console.log(`New user ${answer} has been added`)
+                                newObject.user = answer
+                                console.log(newObject)
+                                taskList.push(newObject)
+                                fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
+                                console.log("Task was succesfully added!")  
+                                resolve()                            
+                              })
+                            })
+                          }                   
+                          const main = async () => {
+                            await question1()
+                            await question2()
+                            await question3()
+                            await question4()
+                            await question5()
+                            recursiveAsyncReadLine();
+                          }                          
+                          main()                         
+                   break;                     
                 case "2":
                     console.log("this is option 2");
                     getTasklist();

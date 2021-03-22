@@ -73,7 +73,7 @@ const recursiveAsyncReadLine = function () {
                         //Covnert the input to a number
                         let selectedTask = parseInt(userInput);
                         selectedTaskIndex = selectedTask -1; //encontrar index del elemento seleccionado
-                        taskList.splice(selectedTaskIndex);
+                        taskList.splice(selectedTaskIndex,1);
                         fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
                         console.log("Task was succesfully deleted!")  
                         recursiveAsyncReadLine()                     

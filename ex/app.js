@@ -38,7 +38,7 @@ var recursiveAsyncReadLine = function () {
                         recursiveAsyncReadLine()                       
                     }
                    })
-                   break;
+                    break;
                    
                 case "5":
                     return rl.close();

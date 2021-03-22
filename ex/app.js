@@ -33,6 +33,7 @@ const recursiveAsyncReadLine = function () {
                    console.log("this is option 1");
                    break;
                 case "2":
+                    console.log("this is option 2");
                     getTasklist();
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to modify? ", (userInput) => {
@@ -65,9 +66,11 @@ const recursiveAsyncReadLine = function () {
                    console.log("this is option 3");
                    break;
                 case "4":
+                    console.log("this is option 4");
                     getTasklist(); 
                     break;
                 case "5":
+                    console.log("this is option 5");
                     return rl.close();
                 default:
                     console.log("No such option. Please enter another: ");

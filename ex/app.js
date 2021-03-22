@@ -28,7 +28,8 @@ const recursiveAsyncReadLine = function () {
         + "2) Edit an existing task\n"
         + "3) Delete a task \n"
         + "4) Show all tasks\n"
-        + "5) Exit app\n"
+        + "5) Show a task\n"
+        + "6) Exit app\n"
         , function (line) {
 
             switch (line){
@@ -84,7 +85,26 @@ const recursiveAsyncReadLine = function () {
                     getTasklist(); 
                     break;
                 case "5":
-                    console.log("this is option 5");
+                    getTasklist();
+                    // Ask for the number of the task to edit
+                    rl.question("Which task would you like to view? ", (choice) => {
+                        //Covnert the input to a number
+                        let selectedTask = parseInt(choice);
+                        if (selectedTask){
+                            // Pass selected task and print on console
+                            let taskToView = outputList(taskList, selectedTask);
+                            console.log(taskToView );
+                            console.log("\n");
+                        }
+                        recursiveAsyncReadLine();                    
+
+                    });
+                    // Update of task is done
+                   // rl.on("close", ()=> console.log("Task was succesfully  updated!"))
+                   
+                    break;
+                case "6":
+                    console.log("this is option 6");
                     return rl.close();
                 default:
                     console.log("No such option. Please enter another: ");

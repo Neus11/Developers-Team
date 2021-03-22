@@ -10,7 +10,14 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-
+function getTasklist() {
+     // read list of tasks from file
+     let tasks = fs.readFileSync('TASQUES.json');
+     // Parse JSON  constructing the JavaScript value or object described by the JSON - string. 
+     let taskList = JSON.parse(tasks); 
+     // Print on console only the list of tasks with a number
+      outputList(taskList); 
+}
 
 const recursiveAsyncReadLine = function () {
     rl.question("Please Choose an option:\n"
@@ -26,12 +33,7 @@ const recursiveAsyncReadLine = function () {
                    console.log("this is option 1");
                    break;
                 case "2":
-                    // read list of tasks from file
-                   let tasks = fs.readFileSync('TASQUES.json');
-                   // Parse JSON  constructing the JavaScript value or object described by the JSON - string. 
-                   let taskList = JSON.parse(tasks); 
-                   // Print on console only the list of tasks with a number
-                    outputList(taskList); 
+                    getTasklist();
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to modify? ", (userInput) => {
                         //Covnert the input to a number
@@ -63,12 +65,7 @@ const recursiveAsyncReadLine = function () {
                    console.log("this is option 3");
                    break;
                 case "4":
-                    // read list of tasks from file
-                    let tasques = fs.readFileSync('TASQUES.json');
-                    // Parse JSON  constructing the JavaScript value or object described by the JSON - string. 
-                    let taskLista = JSON.parse(tasques); 
-                    // Print on console only the list of tasks with a number
-                     outputList(taskLista); 
+                    getTasklist(); 
                     break;
                 case "5":
                     return rl.close();

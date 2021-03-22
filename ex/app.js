@@ -37,9 +37,8 @@ var recursiveAsyncReadLine = function () {
                         console.log(data); 
                         recursiveAsyncReadLine()                       
                     }
-                   })
-                   break;
-                   
+                    })
+                    break;
                 case "5":
                     return rl.close();
                     break;

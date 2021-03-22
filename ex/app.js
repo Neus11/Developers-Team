@@ -10,6 +10,9 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+let tasks = fs.readFileSync('TASQUES.json');
+let taskList = JSON.parse(tasks); 
+
 function getTasklist() {
      // read list of tasks from file
      let tasks = fs.readFileSync('TASQUES.json');
@@ -63,7 +66,18 @@ const recursiveAsyncReadLine = function () {
                    
                    break;
                 case "3":
-                   console.log("this is option 3");
+                    console.log("this is option 3");
+                    getTasklist();
+                    // Ask for the number of the task to edit
+                    rl.question("Which task would you like to delete? ", (userInput) => {
+                        //Covnert the input to a number
+                        let selectedTask = parseInt(userInput);
+                        selectedTaskIndex = selectedTask -1; //encontrar index del elemento seleccionado
+                        taskList.splice(selectedTaskIndex);
+                        fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
+                        console.log("Task was succesfully deleted!")  
+                        recursiveAsyncReadLine()                     
+                        })   
                    break;
                 case "4":
                     console.log("this is option 4");

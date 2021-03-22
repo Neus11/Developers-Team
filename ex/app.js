@@ -63,21 +63,15 @@ const recursiveAsyncReadLine = function () {
                    console.log("this is option 3");
                    break;
                 case "4":
-                   console.log("this is option 4");
-                   fs.readFile('./TASQUES.json', 'utf8', (err,data) => {
-                        if (err) {
-                            console.log(err)
-                            return
-                        } else {
-                            console.log(data); 
-                            recursiveAsyncReadLine()                       
-                        }
-                    })
-                   break;
-                   
+                    // read list of tasks from file
+                    let tasques = fs.readFileSync('TASQUES.json');
+                    // Parse JSON  constructing the JavaScript value or object described by the JSON - string. 
+                    let taskLista = JSON.parse(tasques); 
+                    // Print on console only the list of tasks with a number
+                     outputList(taskLista); 
+                    break;
                 case "5":
                     return rl.close();
-                    break;
                 default:
                     console.log("No such option. Please enter another: ");
             }

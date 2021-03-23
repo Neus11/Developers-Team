@@ -43,7 +43,7 @@ const recursiveAsyncReadLine = function () {
 
             switch (line){
                 case "1":
-                    case "1":
+                   
                     console.log("this is option 1");
 
                         const question1 = () => {

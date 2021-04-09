@@ -89,14 +89,15 @@ const recursiveAsyncReadLine = function () {
                    break;                     
                 case "2":
                     console.log("this is option 2");
-                    console.log(task.getTasklist());
+                    // Print list of existing Tasks with numbers
+                    console.log(outputList(task.getTasklist()));
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to modify? ", (userInput) => {
                         //Covnert the input to a number
                         let selectedTask = parseInt(userInput)
                         if (selectedTask){
                             // Pass selected task and print on console
-                            let taskToUpdate = outputList(taskList, selectedTask);
+                            let taskToUpdate = outputList(task.getTasklist(), selectedTask);
                             //console.log(taskToUpdate);
                             rl.question("what would you like to update: status, start time or end time?\n", (updateInput)=> {
                                 rl.setPrompt("Please, enter the change: \n");

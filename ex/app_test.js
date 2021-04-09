@@ -106,8 +106,9 @@ const recursiveAsyncReadLine = function () {
                                 rl.on("line", (userUpdate)=>{
                                     if (userUpdate){
                                         taskToUpdate[updateInput] = userUpdate; // update assignment
-                                        fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
+                                        fs.writeFileSync('TASQUES.json', JSON.stringify(task.getTasklist()), {flag: "w+"});
                                         rl.close();
+                                        recursiveAsyncReadLine();
 
                                     }
                                 });
@@ -127,7 +128,7 @@ const recursiveAsyncReadLine = function () {
                         let selectedTask = parseInt(userInput);
                         selectedTaskIndex = selectedTask -1; //encontrar index del elemento seleccionado
                         taskList.splice(selectedTaskIndex,1);
-                        fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
+                        fs.writeFileSync('TASQUES.json', JSON.stringify(task.getTasklist()), {flag: "w+"});
                         console.log("Task was succesfully deleted!")  
                         recursiveAsyncReadLine()                     
                         })   

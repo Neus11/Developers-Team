@@ -19,3 +19,14 @@ const printList = (arrList, updateTask = undefined) => {
 } // end of arrow-function
 
 module.exports = printList;
+
+
+const question1 = () => {
+    return new Promise((resolve, reject) => {
+      rl.question('Add new task name please ', (answer) => {
+        console.log(`New task ${answer} has been added`)
+        newObject.task = answer 
+        resolve()
+      })
+    })
+  }     

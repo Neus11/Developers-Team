@@ -3,14 +3,24 @@ const fs = require ('fs');
 
 // Class constructor for newTasks to be added to the list
 class Task{
-    constructor(task, status, starttime, endtime, user){
+    constructor(task, status, endtime, user){
         this.task = task;
         this.status = status;
-        this.starttime = starttime;
+        this.starttime = new Date(); // Add current date automically
         this.endtime = endtime;
         this.user = user;
     }
 } // End class Task
+
+// Class TaskFactor to create new tasks
+class TaskFactory{
+    createTask(task, status, endtime, user){
+        return new Task(task, status, endtime, user);
+    }
+}
+
+// Declare class TaskFactory
+const taskMaker = new TaskFactory();
 
 const getTasklist = () => {
     // read list of tasks from file
@@ -21,9 +31,9 @@ const getTasklist = () => {
      return taskList; 
 }
 
-
 //module.exports = getTasklist; pasa la función y se invoca con getList()
 module.exports = {
     Task,
+    taskMaker,
     getTasklist
 };

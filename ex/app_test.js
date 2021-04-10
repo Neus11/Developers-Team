@@ -10,9 +10,43 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-const task = require('./tasks.js'); // Importing all related to Task
+// Importing clas Task and function getTaskLIst
+const task = require('./tasks.js'); 
+//console.log(task)
 
-//console.log(task.getTasklist());
+let question = {
+    task: 'Add new task name please: ',
+    status: 'Add new status please: ',
+    endtime: 'Add end time please: ',
+    user:  'Add user please: '
+}
+// Array to collect all answer and create new Task
+let tempTask = [];
+
+const questions = (question, key) => {
+    return new Promise((resolve, reject) => {
+      rl.question(question, (answer) => {
+        console.log(`${answer} has been added`)
+        tempTask.push(answer);
+        resolve();
+      });
+    });
+}     
+
+const addNewTask = (newTask, taskList) => {
+    return new Promise((resolve, reject) => {
+      //console.log(newTask);
+      // Create a new Instance of class Task
+      let t = task.taskMaker.createTask(...newTask)
+      // Convert instance Task to a plain object or not possible to  be added to the collecion of Tasks
+      let t2 = Object.assign({}, t);
+      taskList.push(t2); // Add new task to collection
+      //console.log(taskList);
+      fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
+      console.log("Task was succesfully added!")  
+      resolve() 
+    });
+}
 
 const recursiveAsyncReadLine = function () {
     rl.question("Please Choose an option:\n"
@@ -27,62 +61,12 @@ const recursiveAsyncReadLine = function () {
             switch (line){
                   case "1":
                     console.log("this is option 1");
-
-                        const question1 = () => {
-                            return new Promise((resolve, reject) => {
-                              rl.question('Add new task name please ', (answer) => {
-                                console.log(`New task ${answer} has been added`)
-                                newObject.task = answer 
-                                resolve()
-                              })
-                            })
-                          }      
-                          const question2 = () => {
-                            return new Promise((resolve, reject) => {
-                              rl.question('Add new task status please ', (answer) => {
-                                console.log(`New status ${answer} has been added`)
-                                newObject.status = answer 
-                                resolve()
-                              })
-                            })
-                          }
-                          const question3 = () => {
-                            return new Promise((resolve, reject) => {
-                              rl.question('Add new start time please ', (answer) => {
-                                console.log(`New start time ${answer} has been added`)
-                                newObject.starttime = answer
-                                resolve()
-                              })
-                            })
-                          }
-                          const question4 = () => {
-                            return new Promise((resolve, reject) => {
-                              rl.question('Add new end time please ', (answer) => {
-                                console.log(`New end time ${answer} has been added`)
-                                newObject.endtime = answer
-                                resolve()
-                              })
-                            })
-                          }
-                          const question5 = () => {
-                            return new Promise((resolve, reject) => {
-                              rl.question('Add new user please ', (answer) => {
-                                console.log(`New user ${answer} has been added`)
-                                newObject.user = answer
-                                console.log(newObject)
-                                taskList.push(newObject)
-                                fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
-                                console.log("Task was succesfully added!")  
-                                resolve()                            
-                              })
-                            })
-                          }                   
                           const main = async () => {
-                            await question1()
-                            await question2()
-                            await question3()
-                            await question4()
-                            await question5()
+                            await questions(question.task, 'task')
+                            await questions(question.status, 'status')
+                            await questions(question.endtime, 'endtime')
+                            await questions(question.user, 'user')
+                            await addNewTask(tempTask, task.getTasklist())
                             recursiveAsyncReadLine();
                           }                          
                           main()                         
@@ -121,7 +105,7 @@ const recursiveAsyncReadLine = function () {
                    break;
                 case "3":
                     console.log("this is option 3");
-                    console.log(task.getTasklist());
+                    console.log(outputList(task.getTasklist()));
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to delete? ", (userInput) => {
                         //Covnert the input to a number
@@ -135,17 +119,17 @@ const recursiveAsyncReadLine = function () {
                    break;
                 case "4":
                     console.log("this is option 4");
-                    console.log(task.getTasklist());
+                    console.log(outputList(task.getTasklist()));
                     break;
                 case "5":
-                  console.log(task.getTasklist());
+                    console.log(outputList(task.getTasklist()));
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to view? ", (choice) => {
                         //Covnert the input to a number
                         let selectedTask = parseInt(choice);
                         if (selectedTask){
                             // Pass selected task and print on console
-                            let taskToView = outputList(taskList, selectedTask);
+                            let taskToView = outputList(task.getTasklist(), selectedTask);
                             console.log(taskToView );
                             console.log("\n");
                         }

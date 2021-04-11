@@ -11,8 +11,8 @@ const rl = readline.createInterface({
 });
 
 // Importing clas Task and function getTaskLIst
-const task = require('./tasks.js'); 
-//console.log(task)
+const {Task, taskMaker, TaskFunctions} = require('./tasks.js'); 
+
 
 let question = {
     task: 'Add new task name please: ',
@@ -20,9 +20,8 @@ let question = {
     endtime: 'Add end time please: ',
     user:  'Add user please: '
 }
-// Array to collect all answer and create new Task
+ // Array to collect all answer and create new Task
 let tempTask = [];
-
 const questions = (question, key) => {
     return new Promise((resolve, reject) => {
       rl.question(question, (answer) => {
@@ -33,20 +32,6 @@ const questions = (question, key) => {
     });
 }     
 
-const addNewTask = (newTask, taskList) => {
-    return new Promise((resolve, reject) => {
-      //console.log(newTask);
-      // Create a new Instance of class Task
-      let t = task.taskMaker.createTask(...newTask)
-      // Convert instance Task to a plain object or not possible to  be added to the collecion of Tasks
-      let t2 = Object.assign({}, t);
-      taskList.push(t2); // Add new task to collection
-      //console.log(taskList);
-      fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
-      console.log("Task was succesfully added!")  
-      resolve() 
-    });
-}
 
 const recursiveAsyncReadLine = function () {
     rl.question("Please Choose an option:\n"
@@ -61,27 +46,28 @@ const recursiveAsyncReadLine = function () {
             switch (line){
                   case "1":
                     console.log("this is option 1");
-                          const main = async () => {
-                            await questions(question.task, 'task')
-                            await questions(question.status, 'status')
-                            await questions(question.endtime, 'endtime')
-                            await questions(question.user, 'user')
-                            await addNewTask(tempTask, task.getTasklist())
-                            recursiveAsyncReadLine();
-                          }                          
-                          main()                         
+
+                    const main = async () => {
+                        await questions(question.task, 'task')
+                        await questions(question.status, 'status')
+                        await questions(question.endtime, 'endtime')
+                        await questions(question.user, 'user')
+                        await TaskFunctions.addNewTask(tempTask, TaskFunctions.getTasklist())
+                        recursiveAsyncReadLine();
+                    }                          
+                    main()                         
                    break;                     
                 case "2":
                     console.log("this is option 2");
                     // Print list of existing Tasks with numbers
-                    console.log(outputList(task.getTasklist()));
+                    outputList(TaskFunctions.getTasklist());
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to modify? ", (userInput) => {
                         //Covnert the input to a number
                         let selectedTask = parseInt(userInput)
                         if (selectedTask){
                             // Pass selected task and print on console
-                            let taskToUpdate = outputList(task.getTasklist(), selectedTask);
+                            let taskToUpdate = outputList(TaskFunctions.getTasklist(), selectedTask);
                             //console.log(taskToUpdate);
                             rl.question("what would you like to update: status, start time or end time?\n", (updateInput)=> {
                                 rl.setPrompt("Please, enter the change: \n");
@@ -90,10 +76,9 @@ const recursiveAsyncReadLine = function () {
                                 rl.on("line", (userUpdate)=>{
                                     if (userUpdate){
                                         taskToUpdate[updateInput] = userUpdate; // update assignment
-                                        fs.writeFileSync('TASQUES.json', JSON.stringify(task.getTasklist()), {flag: "w+"});
+                                        fs.writeFileSync('TASQUES.json', JSON.stringify(TaskFunctions.getTasklist()), {flag: "w+"});
                                         rl.close();
                                         recursiveAsyncReadLine();
-
                                     }
                                 });
                             });
@@ -101,44 +86,28 @@ const recursiveAsyncReadLine = function () {
                     });
                     // Update of task is done
                     rl.on("close", ()=> console.log("Task was succesfully  updated!"))
-                   
                    break;
                 case "3":
                     console.log("this is option 3");
-                    console.log(outputList(task.getTasklist()));
+                    outputList(TaskFunctions.getTasklist());
                     // Ask for the number of the task to edit
                     rl.question("Which task would you like to delete? ", (userInput) => {
-                        //Covnert the input to a number
-                        let selectedTask = parseInt(userInput);
-                        selectedTaskIndex = selectedTask -1; //encontrar index del elemento seleccionado
-                        taskList.splice(selectedTaskIndex,1);
-                        fs.writeFileSync('TASQUES.json', JSON.stringify(task.getTasklist()), {flag: "w+"});
-                        console.log("Task was succesfully deleted!")  
+                        TaskFunctions.deleteTask(userInput, TaskFunctions.getTasklist());
                         recursiveAsyncReadLine()                     
                         })   
                    break;
                 case "4":
                     console.log("this is option 4");
-                    console.log(outputList(task.getTasklist()));
+                    outputList(TaskFunctions.getTasklist());
                     break;
                 case "5":
-                    console.log(outputList(task.getTasklist()));
-                    // Ask for the number of the task to edit
+                    outputList(TaskFunctions.getTasklist());
                     rl.question("Which task would you like to view? ", (choice) => {
-                        //Covnert the input to a number
-                        let selectedTask = parseInt(choice);
-                        if (selectedTask){
-                            // Pass selected task and print on console
-                            let taskToView = outputList(task.getTasklist(), selectedTask);
-                            console.log(taskToView );
-                            console.log("\n");
-                        }
+                        TaskFunctions.viewTask(choice, TaskFunctions.getTasklist());
                         recursiveAsyncReadLine();                    
-
                     });
                     // Update of task is done
                    // rl.on("close", ()=> console.log("Task was succesfully  updated!"))
-                   
                     break;
                 case "6":
                     console.log("this is option 6");

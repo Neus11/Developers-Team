@@ -107,7 +107,7 @@ const recursiveAsyncReadLine = function () {
                         recursiveAsyncReadLine();                    
                     });
                     // Update of task is done
-                   // rl.on("close", ()=> console.log("Task was succesfully  updated!"))
+                    rl.on("close", ()=> console.log("Task was succesfully  updated!"))
                     break;
                 case "6":
                     console.log("this is option 6");

@@ -42,8 +42,6 @@ const TaskFunctions = (function( ) {
         addNewTask: function(newTask, taskList) {
             return new Promise((resolve, reject) => {
             // Create a new Instance of class Task
-            let t2 = Object.assign({}, t);
-            taskList.push(t2); // Add new task to collection
             taskList.push(taskMaker.createTask(...newTask));
             fs.writeFileSync('TASQUES.json', JSON.stringify(taskList), {flag: "w+"});
             console.log("Task was succesfully added!")  

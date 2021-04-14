@@ -50,10 +50,14 @@ const TaskFunctions = (function( ) {
         },
         deleteTask : function(input, arrTask) {
             let selectedTask = parseInt(input);
-            selectedTaskIndex = selectedTask -1; //encontrar index del elemento seleccionado
-            arrTask.splice(selectedTaskIndex, 1);
-            fs.writeFileSync('./TASQUES.json', JSON.stringify(arrTask), {flag: "w+"});
-            console.log("Task was succesfully deleted!")  
+            selectedTaskIndex = (selectedTask-1); //encontrar index del elemento seleccionado
+            if(selectedTaskIndex < arrTask.length){
+              arrTask.splice(selectedTaskIndex, 1);
+              fs.writeFileSync('./TASQUES.json', JSON.stringify(arrTask), {flag: "w+"});
+              console.log("Task was succesfully deleted!")    
+            }else{
+              console.log("Task selected doesn't exist")      
+            }
         },
         viewTask: function(input, arrTask) {
             let selectedTask = parseInt(input);

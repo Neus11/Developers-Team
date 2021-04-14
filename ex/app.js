@@ -76,16 +76,20 @@ const recursiveAsyncReadLine = function () {
                                 rl.on("line", (userUpdate)=>{
                                     if (userUpdate){
                                         taskToUpdate[updateInput] = userUpdate; // update assignment
-                                        fs.writeFileSync('TASQUES.json', JSON.stringify(TaskFunctions.getTasklist()), {flag: "w+"});
-                                        rl.close();
+                                        const newARR  = TaskFunctions.getTasklist();
+                                        const X = newARR.splice(userInput-1,1,taskToUpdate );
+                                        fs.writeFileSync('TASQUES.json', JSON.stringify(newARR), {flag: "w+"});
+                                        console.log("Task was succesfully  updated!")
                                         recursiveAsyncReadLine();
+
                                     }
                                 });
                             });
                         } 
                     });
                     // Update of task is done
-                    rl.on("close", ()=> console.log("Task was succesfully  updated!"))
+                    
+                    
                    break;
                 case "3":
                     console.log("this is option 3");
